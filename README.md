@@ -37,6 +37,36 @@ By analyzing this data, businesses can make strategic, data-driven decisions, op
 
 
 ![2](https://github.com/user-attachments/assets/b7c7356d-e439-4e0a-9c2b-24bd4709a53d)
+
+Let us understand, How can fetch the Top Worst Category by Defect rate using SQL;
+
+WITH TotalDefects AS (
+    SELECT 
+        Category,
+        SUM([Total Defect Qty]) AS Defects
+    FROM Supplier
+    GROUP BY Category
+),
+Top1Defect AS (
+    SELECT 
+        Category,
+        Defects,
+        RANK() OVER (ORDER BY Defects DESC) AS Rank
+    FROM TotalDefects
+    WHERE Defects IS NOT NULL
+),
+MaxDefects AS (
+    SELECT 
+        MAX(Defects) AS MaxValue
+    FROM Top1Defect
+    WHERE Rank = 1
+)
+SELECT 
+    Category
+FROM TotalDefects
+WHERE Defects = (SELECT MaxValue FROM MaxDefects);
+
+
 ![Screenshot (603)](https://github.com/user-attachments/assets/2b60e1d9-f66d-49c7-9a24-a02c478d81e3)
 ![3](https://github.com/user-attachments/assets/3110e9e5-808d-45c8-86f5-4515efc842b8)
 ![4](https://github.com/user-attachments/assets/b91e020f-e42a-42c0-a621-35e3f22b2fe2)
