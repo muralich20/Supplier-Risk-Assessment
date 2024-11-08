@@ -38,9 +38,9 @@ By analyzing this data, businesses can make strategic, data-driven decisions, op
 
 ![2](https://github.com/user-attachments/assets/b7c7356d-e439-4e0a-9c2b-24bd4709a53d)
 
-Let us understand, How can fetch the Top Worst Category by Defect rate using SQL;
+Let us understand, How can fetch the Top Worst Category (Which here is Mechanicals) by Defect rate using SQL;
 
-WITH TotalDefects AS (
+<pre> WITH TotalDefects AS (
     SELECT 
         Category,
         SUM([Total Defect Qty]) AS Defects
@@ -64,13 +64,146 @@ MaxDefects AS (
 SELECT 
     Category
 FROM TotalDefects
-WHERE Defects = (SELECT MaxValue FROM MaxDefects);
+WHERE Defects = (SELECT MaxValue FROM MaxDefects);</pre>
 
+Let us Understand the same output using Power BI Dax Code;
 
+<pre>
+#1 Worst Defects Name by Category = 
+Var vTable =
+ADDCOLUMNS(
+    SUMMARIZE(Category , Category[Category]),
+    "Num_of_Defects", [Total Defects])
+   
+Var _TopN =
+TOPN(
+    1,
+    _vTable,
+    [Num_of_Defects],DESC)
+   
+Var _MaxValue =
+MAXX(_TopN , [Num_of_Defects])
+   
+Var _Filter =
+FILTER(vTable,
+    [Num_of_Defects] = _MaxValue)
+
+   Var Result =
+CALCULATE(
+    VALUES(Category[Category]),
+    _Filter)
+RETURN
+Result</pre>
+
+Summary,
+
+The DAX code ultimately finds the category with the highest number of defects by:
+
+- Summarizing the data by category.
+- Adding a calculated column to compute total defects.
+- Using the TOPN function to find the highest defect count.
+- Filtering the summarized data to get the category/categories with the highest count.
+- Returning the category name(s) as the result.
+
+Downtime value,
 ![Screenshot (603)](https://github.com/user-attachments/assets/2b60e1d9-f66d-49c7-9a24-a02c478d81e3)
-![3](https://github.com/user-attachments/assets/3110e9e5-808d-45c8-86f5-4515efc842b8)
+
+Let us find the Downtime value using SQl;
+<pre>WITH TotalDowntime AS (
+    SELECT 
+        Category,
+        SUM([Total Downtime (hrs)]) AS Downtime
+    FROM Supplier
+    GROUP BY Category
+),
+Top2Downtime AS (
+    SELECT 
+        Category,
+        Downtime,
+        RANK() OVER (ORDER BY Downtime DESC) AS Rank
+    FROM TotalDowntime
+    WHERE Downtime IS NOT NULL
+)
+SELECT 
+    MIN(Downtime) AS Worst2ndDowntime
+FROM Top2Downtime
+WHERE Rank <= 2;
+</pre>
+
 ![4](https://github.com/user-attachments/assets/b91e020f-e42a-42c0-a621-35e3f22b2fe2)
+
+Let us understand, how to calculate the DownTime Hrs of High-Risk Vendors:
+
+Note: We call a vendor as High-Risk if The DownTime Hrs is more than 400 hrs
+
+<pre>WITH TotalDowntime AS (
+    SELECT 
+        Vendor,
+        SUM([Total Downtime (Hrs) related to Supplier]) AS Downtime
+    FROM SupplierQuality
+    GROUP BY Vendor
+),
+HighRiskVendors AS (
+    SELECT 
+        Vendor,
+        Downtime
+    FROM TotalDowntime
+    WHERE Downtime > 400
+)
+SELECT 
+    SUM(Downtime) AS TotalHighRiskDowntime
+FROM HighRiskVendors;
+</pre>
+
+We Calculate the DownTime cost by considering only, Impact and Rejected Defect Type;
+
+<pre>SELECT 
+    SUM([Total Downtime Cost]) AS TotalDowntimeCost
+FROM 
+    DefectType
+WHERE 
+    [Defect Type] IN ('Impact', 'Rejected');
+</pre> 
+
 ![5](https://github.com/user-attachments/assets/98d223fe-9f5f-41a3-a26d-8e3cf5785b5b)
+
 ![6](https://github.com/user-attachments/assets/5068f668-c0da-4582-bbab-f02bd505b499)
 
+![7](https://github.com/user-attachments/assets/15bd812e-139e-48a6-b838-abbebb224504)
 
+Calculation of Moving Average,
+Important Note: Make sure that FilteredData CTE:
+
+- Joins the Calendar table with the Downtime table to ensure we have a continuous sequence of dates.
+- Uses COALESCE() to replace NULL values in [Total Downtime Cost] with 0.
+- Filters date to only include those up to the current date using GETDATE().
+
+<pre>WITH FilteredData AS (
+    SELECT 
+        c.Date,
+        COALESCE(d.[Total Downtime Cost], 0) AS TotalDowntimeCost
+    FROM Calendar c
+    LEFT JOIN Downtime d 
+        ON c.Date = d.Date
+    WHERE c.Date <= GETDATE() -- Ensures only past dates are considered
+),
+MovingAverage AS (
+    SELECT 
+        Date,
+        TotalDowntimeCost,
+        ROUND(
+            AVG(TotalDowntimeCost) OVER (
+                ORDER BY Date 
+                ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            ), 2
+        ) AS MovingAvgCost
+    FROM FilteredData
+)
+SELECT 
+    Date, 
+    TotalDowntimeCost, 
+    MovingAvgCost
+FROM MovingAverage
+ORDER BY Date;
+
+</pre>
