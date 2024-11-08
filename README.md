@@ -34,9 +34,8 @@ Here’s a breakdown of why analyzing supplier performance data is important, al
 
 By analyzing this data, businesses can make strategic, data-driven decisions, optimize their supplier base, and prevent costly disruptions in their supply chain.
 
+![Defects](https://github.com/user-attachments/assets/8336f67e-cf5c-4d57-a966-172c88eb16e7)
 
-
-![2](https://github.com/user-attachments/assets/b7c7356d-e439-4e0a-9c2b-24bd4709a53d)
 
 Let us understand, How can fetch the Top Worst Category (Which here is Mechanicals) by Defect rate using SQL;
 
@@ -130,7 +129,9 @@ FROM Top2Downtime
 WHERE Rank <= 2;
 </pre>
 
-![4](https://github.com/user-attachments/assets/b91e020f-e42a-42c0-a621-35e3f22b2fe2)
+
+![Vendors](https://github.com/user-attachments/assets/cb281681-9641-4313-8651-b09714982d6f)
+
 
 Let us understand, how to calculate the DownTime Hrs of High-Risk Vendors:
 
@@ -165,11 +166,13 @@ WHERE
     [Defect Type] IN ('Impact', 'Rejected');
 </pre> 
 
-![5](https://github.com/user-attachments/assets/98d223fe-9f5f-41a3-a26d-8e3cf5785b5b)
 
-![6](https://github.com/user-attachments/assets/5068f668-c0da-4582-bbab-f02bd505b499)
+![Materials](https://github.com/user-attachments/assets/2fdbf9a7-eb4b-4270-b7c9-af9d4fd8ef16)
 
-![7](https://github.com/user-attachments/assets/15bd812e-139e-48a6-b838-abbebb224504)
+![Plants](https://github.com/user-attachments/assets/9338481b-611c-469e-961c-fd10514d5435)
+
+
+![Down-Time Impact](https://github.com/user-attachments/assets/32876e49-4390-499a-b791-5d1500913e97)
 
 Calculation of Moving Average,
 Important Note: Make sure that FilteredData CTE:
