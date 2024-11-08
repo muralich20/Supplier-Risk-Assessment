@@ -33,3 +33,14 @@ Here’s a breakdown of why analyzing supplier performance data is important, al
    - **Example**: A tech company monitors supplier data to anticipate potential disruptions. When geopolitical tensions arise in a region where a key supplier is based, they proactively source alternatives to prevent shortages in critical components for their upcoming product launch. 
 
 By analyzing this data, businesses can make strategic, data-driven decisions, optimize their supplier base, and prevent costly disruptions in their supply chain.
+
+
+
+![2](https://github.com/user-attachments/assets/b7c7356d-e439-4e0a-9c2b-24bd4709a53d)
+![Screenshot (603)](https://github.com/user-attachments/assets/2b60e1d9-f66d-49c7-9a24-a02c478d81e3)
+![3](https://github.com/user-attachments/assets/3110e9e5-808d-45c8-86f5-4515efc842b8)
+![4](https://github.com/user-attachments/assets/b91e020f-e42a-42c0-a621-35e3f22b2fe2)
+![5](https://github.com/user-attachments/assets/98d223fe-9f5f-41a3-a26d-8e3cf5785b5b)
+![6](https://github.com/user-attachments/assets/5068f668-c0da-4582-bbab-f02bd505b499)
+
+
