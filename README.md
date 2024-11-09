@@ -210,3 +210,33 @@ FROM MovingAverage
 ORDER BY Date;
 
 </pre>
+
+ # Key Insights
+High Total Defects:
+The overall total defects are extremely high at 2.59 billion. The month of October and specific segments have significantly higher defect rates than others.
+
+Medium Risk Vendors by Downtime:
+Medium-risk vendors have accumulated 41,738 hours of downtime. There are spikes in Q4 2019 and other segments, indicating potential issues with certain vendors during this period.
+
+Recent Moving Average Trends:
+The moving average of downtime costs started declining sharply on November 23, 2019, dropping by 28.88% over approximately 1.27 months.
+Conversely, there was a steep increase in downtime costs between January 1, 2018, and January 19, 2018, where costs surged from 14,592 to 141,168.
+The longest growth trend in downtime costs was observed between January 21, 2018, and May 7, 2018, increasing by 70,512.
+
+# Recommendations
+Investigate and Address High Defect Rates:
+
+Conduct a thorough root cause analysis for the months and segments with the highest defect rates, particularly focusing on October. Identify whether specific suppliers, materials, or production processes are contributing to these spikes.
+Implement a Quality Assurance (QA) program with your suppliers to reduce defects. This could include tighter quality controls, regular audits, and setting stricter KPIs.
+Optimize Medium Risk Vendors by Downtime:
+
+For medium-risk vendors contributing to 41,738 hours of downtime, focus on performance reviews and improvement plans. Prioritize suppliers that caused spikes in Q4 2019 and analyze the root causes of the downtime.
+Consider renegotiating contracts or implementing Service Level Agreements (SLAs) to hold vendors accountable for excessive downtime.
+Leverage the Moving Average Trend Insights:
+
+The decline in downtime costs after November 23, 2019, is a positive sign, indicating improvements. However, investigate what specific actions or changes led to this reduction so they can be replicated across other areas.
+Analyze the steep spike in costs during January 2018 to understand the factors driving such sudden increases. Implement preventive measures to avoid similar future occurrences.
+For the prolonged period of growth between January and May 2018, assess whether it was related to new supplier onboarding, changes in production, or external factors. Use these insights to plan better resource allocation during high-risk periods.
+
+# Conclusion
+The supplier assessment reveals significant areas for improvement, especially regarding defect management and downtime reduction. By taking a proactive approach to quality control, optimizing supplier performance, and learning from historical trends, the company can reduce operational risks, enhance supply chain efficiency, and lower overall costs.
